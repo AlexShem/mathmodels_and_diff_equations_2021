@@ -18,7 +18,7 @@ u_0 = exp(-(x - .5).^2 ./ .05);
 % plot(x, u_0)
 
 %% Transition matrices
-U_now = -eye(Nx);
+U_now = eye(Nx);
 U_next = (-1-2*nu)*eye(Nx) + ...
     diag(nu * ones(Nx-1, 1), 1) + ...
     diag(nu * ones(Nx-1, 1),-1);
@@ -32,7 +32,7 @@ U = zeros(Nt, Nx);
 U(1, :) = u_0(1 : end-1);
 
 for k = 2 : Nt
-    U(k, :) = U_next \ U_now * U(k - 1, :).';
+    U(k, :) = -U_next \ U_now * U(k - 1, :).';
 end
 U = [U, U(:, 1)];
 

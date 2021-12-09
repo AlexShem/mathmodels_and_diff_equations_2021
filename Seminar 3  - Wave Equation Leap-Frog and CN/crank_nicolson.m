@@ -1,7 +1,7 @@
 %% Main parameters
-C = 1;
+C = 2;
 L = 1;
-T = .3;
+T = 1;
 
 Nx = 101;
 nu = .1; % nu = C * tau / h
@@ -12,13 +12,9 @@ h = x(2) - x(1);
 
 tau = nu * h / C;
 Nt = ceil(T/tau) + 1;
+T = tau*(Nt - 1);
 
 u_0 = sin(x*2*pi/L);
-sub_ind = x >= .45*L & x <= .55*L;
-xsub = x(sub_ind);
-u_0 = zeros(size(x));
-u_0(sub_ind) = sin((xsub-L/2)*20/L*pi);
-
 u_tau = u_0;
 % figure(1)
 % plot(x, u_0)
@@ -50,7 +46,26 @@ figure(3)
 
 for k = [1 : floor(Nt/100) : Nt, Nt]
     plot(x, U(k, :));
+    t = (k-1)*tau;
+    hold on;
+    plot(x, sin(x/L*2*pi) * cos(C*2*pi*t), '--r');
+    hold off;
     axis([0 L -1 1]);
     title(['t = ', num2str((k-1)*tau)]);
     drawnow;
 end
+
+%% Error
+t = (0 : tau : T).';
+U_true = cos(C*2*pi*t) * sin(x/L*2*pi);
+
+C_norm = max(abs(U_true - U), [], 2);
+L2_norm = sqrt(h*sum((U_true - U).^2, 2));
+
+figure(4);
+plot(t, C_norm);
+hold on;
+plot(t, L2_norm);
+hold off;
+legend('C', 'L^2', 'Location', 'best')
+xlabel('t');

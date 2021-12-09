@@ -1,10 +1,10 @@
 %% Main parameters
 C = 1;
 L = 1;
-T = .3;
+T = 1;
 
 Nx = 201;
-nu = .01; % nu = C * tau / h
+nu = .1; % nu = C * tau / h
 
 %% Secondary parameters
 x = linspace(0, L, Nx);
@@ -13,11 +13,11 @@ h = x(2) - x(1);
 tau = nu * h / C;
 Nt = ceil(T/tau) + 1;
 
-% u_0 = sin(x*2*pi/L);
-sub_ind = x >= .45*L & x <= .55*L; 
-xsub = x(sub_ind);
-u_0 = zeros(size(x));
-u_0(sub_ind) = sin((xsub-L/2)*20/L*pi);
+u_0 = sin(x*2*pi/L);
+% sub_ind = x >= .45*L & x <= .55*L; 
+% xsub = x(sub_ind);
+% u_0 = zeros(size(x));
+% u_0(sub_ind) = sin((xsub-L/2)*20/L*pi);
 u_tau = u_0;
 
 %% Transition matrices
@@ -28,6 +28,7 @@ U_now = (2-2*nu^2)*eye(Nx) + ...
 U_prev = -U_next;
 
 %% Dirichlet border condition
+% U_next(1, 2) = -1; U_next(end, end-1) = -1;
 U_now(1, :) = 0;
 U_now(end, :) = 0;
 U_prev(1, :) = 0;

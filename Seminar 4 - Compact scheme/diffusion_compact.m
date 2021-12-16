@@ -3,8 +3,8 @@ D = 1;
 L = 1;
 T = 1;
 
-Nx = 150;
-nu = .1; % nu = D * tau / h^2
+Nx = 100;
+nu = 1; % nu = D * tau / h^2
 
 %% Secondary parameters
 x = linspace(0, L, Nx + 1);

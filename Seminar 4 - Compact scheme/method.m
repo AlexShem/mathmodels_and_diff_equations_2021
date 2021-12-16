@@ -43,13 +43,6 @@ for k = 2 : Nt
     U(k, :) = U_next \ right_part;
 end
 
-% x_grid = linspace(a, b, 1001);
-% figure(1)
-% plot(x, u);
-% hold on;
-% plot(x_grid, exp(x_grid/2), '--r');
-% hold off;
-
 %% Visualisation
 figure(2)
 

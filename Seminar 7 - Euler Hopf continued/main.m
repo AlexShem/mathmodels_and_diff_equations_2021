@@ -23,7 +23,8 @@ for j = 1 : length(Nx)
     h = x(2) - x(1);
     tau = nu * h;
     
-    [U, ~, ~, x, ~, t] = EH_integration(L, T, Nx(j), tau, u_0, f, scheme);
+%     [U, ~, ~, x, ~, t] = EH_integration(L, T, Nx(j), tau, u_0, f, scheme);
+    [U, ~, ~, x, ~, t] = EH_smooth(L, T, Nx(j), tau, u_0, f, scheme);
     [x_mesh, t_mesh] = meshgrid(x, t);
     U_ref_val = interp2(x_ref, t_ref, U_ref, x_mesh, t_mesh);
     Cn = max(abs(U_ref_val - U), [], 2);

@@ -3,7 +3,7 @@ L = 2*pi;
 T = .5;
 nu = 0.05; % nu = tau/h
 Nx = [25, 50, 100, 200];
-% Nx = 25 : 25 : 200;
+scheme = 'compact';
 
 u_0 = @(x) sin(x);
 f = @(u) u.^2/2;
@@ -11,7 +11,7 @@ f = @(u) u.^2/2;
 Nx_ref = 400;
 h_ref = L / (Nx_ref - 1);
 tau_ref = nu * h_ref;
-[U_ref, ~, ~, x_ref, ~, t_ref] = EH_integration(L, T, Nx_ref, tau_ref, u_0, f, 'compact');
+[U_ref, ~, ~, x_ref, ~, t_ref] = EH_integration(L, T, Nx_ref, tau_ref, u_0, f, scheme);
 [x_ref, t_ref] = meshgrid(x_ref, t_ref);
 
 %%
@@ -23,7 +23,7 @@ for j = 1 : length(Nx)
     h = x(2) - x(1);
     tau = nu * h;
     
-    [U, ~, ~, x, ~, t] = EH_integration(L, T, Nx(j), tau, u_0, f, 'compact');
+    [U, ~, ~, x, ~, t] = EH_integration(L, T, Nx(j), tau, u_0, f, scheme);
     [x_mesh, t_mesh] = meshgrid(x, t);
     U_ref_val = interp2(x_ref, t_ref, U_ref, x_mesh, t_mesh);
     Cn = max(abs(U_ref_val - U), [], 2);
@@ -39,6 +39,6 @@ figure(2);
 loglog(Nx, C_norm);
 
 %%
-order_comp = (log10(C_norm(end)) - log10(C_norm(end-2))) / ...
-    (log10(Nx(end)) - log10(Nx(end - 2)));
-disp(['[ORDER] Compact scheme: ', num2str(order_comp), '. nu = ', num2str(nu)])
+order_comp = (log10(C_norm(end)) - log10(C_norm(1))) / ...
+    (log10(Nx(end)) - log10(Nx(1)));
+disp(['[ORDER] ', scheme, ' scheme: ', num2str(order_comp), '. nu = ', num2str(nu)])

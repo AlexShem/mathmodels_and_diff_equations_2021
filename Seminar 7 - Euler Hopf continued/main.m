@@ -9,7 +9,7 @@ u_0 = @(x) sin(x);
 f = @(u) u.^2/2;
 
 Nx_ref = 400;
-h_ref = L / (Nx_ref - 1);
+h_ref = L / Nx_ref;
 tau_ref = nu * h_ref;
 [U_ref, ~, ~, x_ref, ~, t_ref] = EH_integration(L, T, Nx_ref, tau_ref, u_0, f, scheme);
 [x_ref, t_ref] = meshgrid(x_ref, t_ref);
@@ -23,8 +23,8 @@ for j = 1 : length(Nx)
     h = x(2) - x(1);
     tau = nu * h;
     
-%     [U, ~, ~, x, ~, t] = EH_integration(L, T, Nx(j), tau, u_0, f, scheme);
-    [U, ~, ~, x, ~, t] = EH_smooth(L, T, Nx(j), tau, u_0, f, scheme);
+    [U, ~, ~, x, ~, t] = EH_integration(L, T, Nx(j), tau, u_0, f, scheme);
+%     [U, ~, ~, x, ~, t] = EH_smooth(L, T, Nx(j), tau, u_0, f, scheme);
     [x_mesh, t_mesh] = meshgrid(x, t);
     U_ref_val = interp2(x_ref, t_ref, U_ref, x_mesh, t_mesh);
     Cn = max(abs(U_ref_val - U), [], 2);

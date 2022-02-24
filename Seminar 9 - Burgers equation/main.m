@@ -1,5 +1,5 @@
 %% Main parameters
-D = .1;
+D = .5;
 L = 2*pi;
 T = 1;
 nu = .1; % nu = D*tau/h^2;
@@ -34,6 +34,8 @@ legend(num2str(Nx.'))
 %% Visualisation: Order
 figure(2);
 loglog(Nx, C_norm);
+xlabel('N_x');
+ylabel('C norm');
 
 %% Order
 order_comp = (log10(C_norm(end)) - log10(C_norm(1))) / ...

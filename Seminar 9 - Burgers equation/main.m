@@ -1,7 +1,7 @@
 %% Main parameters
-D = .5;
+D = .05;
 L = 2*pi;
-T = 1;
+T = .1;
 nu = .1; % nu = D*tau/h^2;
 Nx = [25 50 100 200];
 scheme = 'compact';

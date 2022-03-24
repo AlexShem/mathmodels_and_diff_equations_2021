@@ -39,6 +39,9 @@ Nx_mesh = ceil(L ./ h_mesh);
 h_mesh = L ./ Nx_mesh;
 tau_mesh = sqrt(nu_mesh .* h_mesh.^4 / C);
 
+mu_mesh = D./h_mesh.^2;
+nu_mesh = C * tau_mesh.^2 ./ h_mesh.^4;
+
 C_norm_dt = struct(...
     'CN', zeros(length(mu_range), length(nu_range)),...
     'CN_time', zeros(length(mu_range), length(nu_range)),...

@@ -1,4 +1,8 @@
-function [U, V] = step_adamsbashforth(u, v, D, h, tau)
+function [U, V] = step_adamsbashforth(u, v, params)
+D = params.D;
+h = params.h;
+tau = params.tau;
+
 vp = v + tau/(2*h^2)*(circshift(u, 1) - 2*u + circshift(u, -1)) + ...
     D*tau/2 * u .* (u.^2 + v.^2);
 up = u - tau/(2*h^2)*(circshift(v, 1) - 2*v + circshift(v, -1)) - ...

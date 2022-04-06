@@ -25,12 +25,18 @@ x = linspace(0, L, Nx + 1);
 x = x(1 : end-1);
 t = linspace(0, T, Nt);
 
+params.D = D;
+params.h = h;
+params.tau = tau;
+params.Nx = Nx;
+params.Nt = Nt;
+
 %% Initial conditions
 u0 = sin(x);
 v0 = zeros(size(x));
 
 %% Integration
-[u, v] = system_schrodinger(u0, v0, D, h, tau, Nx, Nt, scheme);
+[u, v] = system_schrodinger(u0, v0, params, scheme);
 I = sum(u.^2 + v.^2, 2);
 
 %% Visualisation

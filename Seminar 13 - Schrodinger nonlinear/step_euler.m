@@ -1,4 +1,8 @@
-function [U, V] = step_euler(u, v, D, h, tau)
+function [U, V] = step_euler(u, v, params)
+D = params.D;
+h = params.h;
+tau = params.tau;
+
 U = u - ...
     tau/h^2*(circshift(v, 1) - 2*v + circshift(v, -1)) - ...
     D*tau*v.*(u.^2 + v.^2);

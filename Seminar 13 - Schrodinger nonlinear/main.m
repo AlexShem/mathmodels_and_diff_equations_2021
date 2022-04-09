@@ -1,8 +1,8 @@
 %% Parameters
 
-% scheme = 'compact';
+scheme = 'compact'; params.a = 1; params.C = 1;
 % scheme = 'laksvendroff';
-scheme = 'adamsbashforth';
+% scheme = 'adamsbashforth';
 % scheme = 'euler';
 
 L = 2*pi;

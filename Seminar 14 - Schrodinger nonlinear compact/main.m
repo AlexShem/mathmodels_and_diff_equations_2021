@@ -29,7 +29,8 @@ params.Nx = Nx;
 params.Nt = Nt;
 
 %% Initial conditions
-u0 = sin(x);
+% u0 = sin(x);
+u0 = ones(size(x));
 % v0 = cos(x);
 v0 = zeros(size(x));
 

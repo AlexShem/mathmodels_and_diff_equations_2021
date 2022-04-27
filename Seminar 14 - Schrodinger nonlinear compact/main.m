@@ -49,13 +49,17 @@ hold off;
 
 %% Animation
 figure(2)
-for k = [1 : 200 : Nt, Nt]
+for k = [1 : 10 : Nt, Nt]
     plot(x, u(k, :));
     hold on;
     plot(x, v(k, :));
     hold off;
-    axis([min(x), max(x), -1, 1])
-    title(['t = ', num2str((k-1)*tau)]);
+    lg = legend('$u$', '$v$', 'Interpreter', 'latex');
+    lg.FontSize = 16; lg.Location = 'southeast';
+    title(['Scheme: ', scheme]);
+    subtitle(['t = ', num2str((k-1)*tau)]);
+    xlabel('$x$, m.', 'Interpreter', 'latex', 'FontSize', 14);
+    axis([min(x), max(x), -1.1, 1.1])
     
     drawnow;
 end

@@ -24,12 +24,7 @@ for k = 2 : Nt
         U(k, :) = u;
         V(k, :) = v;
     elseif strcmp(scheme, 'compact')
-%         [up, vp] = step_adamsbashforth(U(k-1, :), V(k-1, :), params);
-%         [up, vp] = step_maccormack(U(k-1, :), V(k-1, :), params);
-        
-        tau = params.tau;
-        up = cos((k-1)*tau)*ones(1, Nx);
-        vp = sin((k-1)*tau)*ones(1, Nx);
+        [up, vp] = step_maccormack(U(k-1, :), V(k-1, :), params);
         [u, v] = step_compact(U(k-1, :), V(k-1, :), up, vp, params);
         U(k, :) = u;
         V(k, :) = v;

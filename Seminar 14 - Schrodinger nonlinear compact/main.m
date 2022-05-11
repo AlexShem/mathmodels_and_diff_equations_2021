@@ -1,16 +1,16 @@
 %% Parameters
 
-scheme = 'compact'; params.a = -1; params.C = -1;
+% scheme = 'compact'; params.a = -1; params.C = -1;
 % scheme = 'laksvendroff';
-% scheme = 'maccormack';
+scheme = 'maccormack';
 % scheme = 'adamsbashforth';
 % scheme = 'euler';
 
-L = 2*pi;
-T = .2*pi;
+L = pi;
+T = 1000;
 
-Nx = 5;
-nu = .004; % nu = tau/h^2
+Nx = 72;
+nu = 12; % nu = tau/h^2
 D = 1;
 
 h = L / Nx;
@@ -45,8 +45,10 @@ I = sum(u.^2 + v.^2, 2);
 figure(1)
 hold on;
 plot(t, I)
-xlabel('t');
+xl = xlabel('$t$'); xl.Interpreter = 'latex'; xl.FontSize = 16;
+yl = ylabel('$I(u, v) = u^2 + v^2$'); yl.Interpreter = 'latex'; yl.FontSize = 16;
 hold off;
+ttl = title(['$\tau = $', num2str(tau), ', $h = $', num2str(h)]); ttl.Interpreter = 'latex'; ttl.FontSize = 16;
 
 %% Animation
 figure(2)

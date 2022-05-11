@@ -1,16 +1,16 @@
 %% Parameters
 
-scheme = 'compact'; params.a = -1; params.C = -1;
+% scheme = 'compact'; params.a = -.51; params.C = -.51;
 % scheme = 'laksvendroff';
-% scheme = 'maccormack';
+scheme = 'maccormack';
 % scheme = 'adamsbashforth';
 % scheme = 'euler';
 
 L = 2*pi;
-T = .2*pi;
+T = 12;
 
-Nx = 5;
-nu = .004; % nu = tau/h^2
+Nx = 50;
+nu = .12; % nu = tau/h^2
 D = 1;
 
 h = L / Nx;
@@ -45,12 +45,23 @@ I = sum(u.^2 + v.^2, 2);
 figure(1)
 hold on;
 plot(t, I)
-xlabel('t');
+xl = xlabel('$t$'); xl.Interpreter = 'latex'; xl.FontSize = 16;
+yl = ylabel('$I(u, v) = u^2 + v^2$'); yl.Interpreter = 'latex'; yl.FontSize = 16;
 hold off;
+ttl = title(['$\tau = $', num2str(tau), ', $h = $', num2str(h)]); ttl.Interpreter = 'latex'; ttl.FontSize = 16;
+
+%% Visualisation 2
+figure(2)
+hold on;
+plot(t, log10(I./I(1)))
+xl = xlabel('$t$'); xl.Interpreter = 'latex'; xl.FontSize = 16;
+yl = ylabel('$\log_{10} I(u, v) / I_0(u, v)$'); yl.Interpreter = 'latex'; yl.FontSize = 16;
+hold off;
+ttl = title(['$\tau = $', num2str(tau), ', $h = $', num2str(h)]); ttl.Interpreter = 'latex'; ttl.FontSize = 16;
 
 %% Animation
 figure(2)
-for k = [1 : 10 : Nt, Nt]
+for k = [1 : 100 : Nt, Nt]
     plot(x, u(k, :));
     hold on;
     plot(x, v(k, :));

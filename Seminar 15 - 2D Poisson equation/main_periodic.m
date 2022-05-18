@@ -26,8 +26,7 @@ params.Nx = Nx;
 params.Ny = Ny;
 
 %% Right-hand side
-f = @(x, y) zeros(size(x));
-% f = @(x, y) -2*sin(x).*sin(y);
+f = @(x, y) -2*sin(x).*sin(y);
 
 %% Integration
 u = system_poisson(scheme, params, f);

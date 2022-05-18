@@ -6,7 +6,7 @@ scheme = 'standard';
 L = 2*pi;
 % T = 12;
 
-Nx = 50;
+Nx = 4;
 Ny = Nx;
 
 hx = L / Nx;
@@ -16,20 +16,21 @@ x = linspace(0, L, Nx + 1);
 x = x(1 : end-1);
 y = linspace(0, L, Ny + 1);
 y = y(1 : end-1);
+[x, y] = meshgrid(x, y);
 
+params.x = x;
+params.y = y;
 params.hx = hx;
 params.hy = hy;
 params.Nx = Nx;
 params.Ny = Ny;
 
-%%  conditions
-% u0 = sin(x);
-u0 = ones(size(x));
-% v0 = cos(x);
-v0 = zeros(size(x));
+%% Right-hand side
+f = @(x, y) zeros(size(x));
+% f = @(x, y) -2*sin(x).*sin(y);
 
 %% Integration
-[u, v] = system_schrodinger(u0, v0, params, scheme);
+u = system_poisson(scheme, params, f);
 x = [x, L];
 u = [u, u(:, 1)];
 v = [v, v(:, 1)];

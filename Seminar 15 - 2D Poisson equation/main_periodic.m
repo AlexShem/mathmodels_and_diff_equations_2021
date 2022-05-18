@@ -1,7 +1,7 @@
 %% Parameters
 
-% scheme = 'compact'; params.a = -.51; params.C = -.51;
-scheme = 'standard';
+scheme = 'compact'; params.r = 0;
+% scheme = 'standard';
 
 L = 2*pi;
 % T = 12;

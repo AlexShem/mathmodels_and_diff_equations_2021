@@ -13,6 +13,12 @@ if strcmp(scheme, 'standard')
     q = 0;
     r = 0;
 elseif strcmp(scheme, 'compact')
+    a = -1/5;
+    b = -1/20;
+    c = 1;
+    r = params.r;
+    p = -hx^2/5 + 4*r;
+    q = -hx^2/40 - 2*r;
 else
     error(['Scheme "', scheme, '" is not supported yet.']);
 end

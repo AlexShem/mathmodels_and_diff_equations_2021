@@ -1,4 +1,4 @@
-function u = system_poisson(scheme, params, f)
+function u = system_poisson_periodic(scheme, params, f)
 hx = params.hx;
 % hy = params.hy;
 N = numel(params.x);

@@ -142,7 +142,8 @@ F(N, N - 1) = q; %up
 F(N, N - Ny - 1) = r; % tl
 
 %% Solution
-rhs = f(params.x, params.y);
-u = A \ F*rhs(:);
+f_val = f(params.x, params.y);
+rhs = F*f_val(:);
+u = A \ rhs;
 u = reshape(u, Ny, Nx);
 end

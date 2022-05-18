@@ -173,6 +173,6 @@ F(N, N - 1) = q; %up
 
 %% Solution
 rhs = f(params.x, params.y);
-u = A \ rhs(:);
+u = A \ F*rhs(:);
 u = reshape(u, Ny, Nx);
 end

@@ -4,7 +4,7 @@ scheme = 'compact'; params.r = 0.1;
 
 L = 2*pi;
 
-Nx = 21;
+Nx = 11;
 Ny = Nx;
 
 hx = L / Nx;
@@ -14,9 +14,6 @@ x = linspace(0, L, Nx);
 y = linspace(0, L, Ny);
 [x, y] = meshgrid(x, y);
 
-T = 10000;
-Nt = 10000;
-tau = T/(Nt - 1);
 u0 = zeros(size(x));
 
 params.x = x;
@@ -25,9 +22,7 @@ params.hx = hx;
 params.hy = hy; 
 params.Nx = Nx;
 params.Ny = Ny;
-params.T = T;
-params.tau = tau;
-params.Nt = Nt;
+params.L = L;
 
 %% Right-hand side
 syms xs ys
@@ -42,16 +37,18 @@ f = matlabFunction(f_sym, 'Vars', [xs, ys]);
 clear xs ys u_sym f_sym
 
 %% Integration
+mg_lvls = 4;
 N_sim = 100;
-N_iter = NaN(N_sim, 1);
+% N_iter = NaN(N_sim, 1);
 
 tol = 1e-4;
 tic
 for k = 1 : N_sim
-    [~, Ni] = seidel_system_poisson_dirichlet(scheme, params, u0, f, tol, 1);
+    [u_sol, Ni] = seidel_system_poisson_dirichlet(scheme, params, u0, f, tol, 1, mg_lvls);
     N_iter(k) = Ni;
 end
 toc
+
 N_avg = mean(N_iter);
 [~, N_const] = seidel_system_poisson_dirichlet(scheme, params, u0, f, tol, 0);
 

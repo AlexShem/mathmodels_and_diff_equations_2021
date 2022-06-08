@@ -4,13 +4,13 @@ uB = 0; % Right border value
 L = 2*pi;
 
 theta = @(x) ones(size(x));
-% theta = @(x) x;
+% theta = @(x) exp(.1*x);
 f = @(x) sin(x);
 u_c = @(x, c1, c2) c1 + c2.*x - sin(x);
 
 F = @(x, u, du) theta(x).*du.^2/2 + f(x).*u;
 
-Nx = 105;
+Nx = 91;
 x = linspace(0, L, Nx);
 x = x(:);
 h = x(2) - x(1);
@@ -48,6 +48,22 @@ options = optimoptions('fmincon', 'Display', 'iter', 'Algorithm', 'active-set', 
 tic
 [u_min, Fval, exitflag, output] = fmincon(@(u) objectivefun(x, F, u), u0, [], [], Aeq, beq, [], [], [], options);
 toc
+
+%% Visualistaion: Final solution
+figure(2)
+plot(x, u_ds);
+hold on;
+plot(x, u_min, '-.r');
+fplot(@(t) u_c(t, 0, 0), [0, L], ':k', 'LineWidth', 1);
+hold off;
+
+%% Visualistaion: Error
+u_true = u_c(x, 0, 0);
+figure(3)
+semilogy(x, abs(u_ds - u_true));
+hold on;
+semilogy(x, abs(u_min - u_true));
+hold off;
 
 %% Functional
 function Fval = objectivefun(x, F, u)

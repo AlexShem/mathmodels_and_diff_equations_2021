@@ -1,12 +1,12 @@
 %% Main parameters
-uA = 0; % Left border value
-uB = 0; % Right border value
+uA = 1; % Left border value
+uB = -1; % Right border value
 L = 2*pi;
 
 theta = @(x) ones(size(x));
 % theta = @(x) exp(.1*x);
 f = @(x) sin(x);
-u_c = @(x, c1, c2) c1 + c2.*x - sin(x);
+u_c = @(x) uA + (uB - uA)/L.*x - sin(x); % Constancts for theta == 1
 
 F = @(x, u, du) theta(x).*du.^2/2 + f(x).*u;
 
@@ -54,11 +54,11 @@ figure(2)
 plot(x, u_ds);
 hold on;
 plot(x, u_min, '-.r');
-fplot(@(t) u_c(t, 0, 0), [0, L], ':k', 'LineWidth', 1);
+fplot(u_c, [0, L], ':k', 'LineWidth', 1);
 hold off;
 
 %% Visualistaion: Error
-u_true = u_c(x, 0, 0);
+u_true = u_c(x);
 figure(3)
 semilogy(x, abs(u_ds - u_true));
 hold on;

@@ -29,3 +29,6 @@ rhs = h^2*f(x);
 rhs(1) = uA; rhs(end) = uB;
 
 u_ds = D \ rhs;
+du_ds = (u_ds(3:end) - u_ds(1:end-2)) / (2*h);
+du_ds = [(u_ds(2)-u_ds(1))/h; du_ds; (u_ds(end)-u_ds(end-1))/h];
+F_ds = h*sum(F(x, u_ds, du_ds));

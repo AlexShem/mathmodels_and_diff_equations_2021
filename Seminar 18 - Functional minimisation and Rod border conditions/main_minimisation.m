@@ -13,3 +13,18 @@ F = @(x, u, du) theta(x).*du.^2/2 + f(x).*u(x);
 Nx = 105;
 x = linspace(0, L, Nx);
 h = x(2) - x(1);
+
+%% Divergent scheme
+xh = .5*(x(2:end) + x(1:end-1));
+th = theta(xh);
+
+D = -diag([0 th] + [th 0]) + ...
+    diag(th, 1) + ...
+    diag(th, -1);
+D(1, :) = 0; D(1, 1) = 1;
+D(end, :) = 0; D(end, end) = 1;
+
+rhs = h^2*f(x.');
+rhs(1) = uA; rhs(end) = uB;
+
+u_ds = D \ rhs;

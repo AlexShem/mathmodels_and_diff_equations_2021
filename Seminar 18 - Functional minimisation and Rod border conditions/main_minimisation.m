@@ -56,6 +56,7 @@ hold on;
 plot(x, u_min, '-.r');
 fplot(u_c, [0, L], ':k', 'LineWidth', 1);
 hold off;
+legend('Divergent scheme', 'Integral minimisation', 'True solution', 'FontSize', 12);
 
 %% Visualistaion: Error
 u_true = u_c(x);
@@ -64,6 +65,7 @@ semilogy(x, abs(u_ds - u_true));
 hold on;
 semilogy(x, abs(u_min - u_true));
 hold off;
+legend('Divergent scheme', 'Integral minimisation', 'FontSize', 12);
 
 %% Functional
 function Fval = objectivefun(x, F, u)

@@ -4,6 +4,11 @@ fx = @(x) x(1).*exp(-x(1).^2-x(2).^2)+(x(1).^2+x(2).^2)/20;
 lb = [-2, -2];
 ub = [2, 2];
 
+f = @(x, y) exp(-(x.^2+y.^2)/10).*sin(x).*cos(y);
+fx = @(x) exp(-(x(1).^2+x(2).^2)/10).*sin(x(1)).*cos(x(2));
+lb = [-4, -4];
+ub = [4, 4];
+
 figure(1)
 fsurf(f, [lb(1) ub(1) lb(2) ub(2)], 'ShowContours', 'on', 'FaceAlpha', .3)
 xlabel('x');
@@ -23,3 +28,19 @@ hold off;
 option = optimoptions('fminunc', 'Display', 'iter', 'PlotFcn', 'optimplotfval');
 [x, fval] = fminunc(fx, x0, option);
 
+%% Particle swarm
+f = @(x, y) (4 - 2.1*x.^2 + x.^4/3).*x.^2 + x.*y + (-4 + 4*y.^2).*y.^2;
+fx = @(x) (4 - 2.1*x(1).^2 + x(1).^4/3).*x(1).^2 + x(1).*x(2) + (-4 + 4*x(2).^2).*x(2).^2;
+lb = [-2, -1];
+ub = [2, 1];
+
+f = @(x, y) exp(-(x.^2+y.^2)/10).*sin(x).*cos(y);
+fx = @(x) exp(-(x(1).^2+x(2).^2)/10).*sin(x(1)).*cos(x(2));
+lb = [-4, -4];
+ub = [4, 4];
+
+figure(3)
+fsurf(f, [lb(1) ub(1) lb(2) ub(2)], 'ShowContours', 'on', 'FaceAlpha', .3)
+
+% rng(2);
+[xmin_s, fmin_s] = particle_swarm(fx, f, lb, ub, 50, 50);

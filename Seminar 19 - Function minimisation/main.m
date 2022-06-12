@@ -19,3 +19,7 @@ hold on;
 plot3(path_g(1,:), path_g(2,:), f(path_g(1,:), path_g(2,:)), '-*r')
 hold off;
 
+%% Matlab native
+option = optimoptions('fminunc', 'Display', 'iter', 'PlotFcn', 'optimplotfval');
+[x, fval] = fminunc(fx, x0, option);
+
